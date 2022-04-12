@@ -8,6 +8,16 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const mongoose = require('mongoose');
+mongoose.connect("mongodb+srv://FunctionUp-Uranium1:GQgLhymenkDpmdlI@cluster0.xmo61.mongodb.net/SWATI-DB", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    })
+
+    .then(() => console.log("mongo DB is connected"))
+    .catch( err => console.log(err))
+
+
 app.use('/', route);
 
 app.listen(process.env.PORT || 3000, function() {
