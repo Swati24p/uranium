@@ -22,12 +22,15 @@ const getRandomBooks4 = async function (req, res) {
 }
 
 const getBooksInYear5 = async function (req, res) {
-    let bookData = await bookCollectionModel.find({ $or: [{ year: "1995" }] })
+    let data = req.body
+    data.year 
+    let bookData = await bookCollectionModel.find(data)
     res.send({ list: bookData })
 }
 
 const getParticularBooks6 = async function (req, res) {
-    let bookData = await bookCollectionModel.find({ year: "2021" })
+    let data = req.body;
+    let bookData = await bookCollectionModel.find(data)
     res.send({ bookData })
 }
 
