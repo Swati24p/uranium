@@ -45,6 +45,7 @@ const updateBooks = async function (req, res) {
     // update hardcover to true for few books
     let hardCOverPublishers = await publisherModel.find({name : {$in:['Penguin','HarperCollins'] }}).select({_id:1})
     let arrayOfPublishers = []
+
     
     for (let i = 0; i < hardCOverPublishers.length; i++) {
         let objId = hardCOverPublishers[i]._id 
