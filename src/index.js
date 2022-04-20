@@ -14,14 +14,20 @@ mongoose.connect("mongodb+srv://FunctionUp-Uranium1:GQgLhymenkDpmdlI@cluster0.xm
 .then( () => console.log("MongoDb is connected"))
 .catch ( err => console.log(err) )
 
-app.use('/get/ip/address' ,
-    function (req, res, next){
-        console.log("inside global MW");
-        console.log(new Date().getTime());
-        console.log(req.ip);
-        next();
-    }
-);
+
+const moment = require('moment');
+let time = moment();
+app.use (function (req, res, next) {
+    const today = moment();
+     let x= today.add("days")
+    console.log(x);
+    let ip= req.ip
+    console.log(ip);
+    let url= req.originalUrl
+    console.log(url);
+    next()
+});
+ //console.log(time.format('h:mm:ss a'));
 
 app.use('/', route);
 

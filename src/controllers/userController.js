@@ -1,6 +1,4 @@
 const UserModel= require("../models/userModel")
-const mongoose = require('mongoose');
-
 
 const createUser= async function (req, res) {
     let data= req.body
