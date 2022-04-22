@@ -1,4 +1,5 @@
 const { count } = require("console")
+const bookModel = require("../models/bookModel")
 const BookModel = require("../models/bookModel")
 
 
@@ -18,85 +19,72 @@ const createBook = async function (req, res) {
     }
 }
 
-// TRY CATCH SUMMARY:
-// if you get an error in try block, it will not execute the next lines of code inside try
-// instead it will jump into catch block and execute the code there
-// code in catch block is normallly not executed
-//rather catch block is only executed if there is error in try block
-// the error( along with message++) gets sent to catch block incase there is an error
-
-
-
-
-// Specific HTTP codes(only impt ones)
-// 2xx- Success
-// 4xx- something gone wrong..and problem is on user side(client side)
-// 5xx- server side problems
-
-// "BAD REQUEST" ...400..say if username password dont match etc..or anything generic( any problem in input on user side or any other unhandled problem)
-// "RESOURCE NOT FOUND"...404 //404 page not found...eg. find ("asaijndianud89")...let book =bookModel.findOne({_id:"asaijndianud89"})   if (book){..} else res.status(404).send({})
-// "AUTHENTICATION MISSING"...401..login is required...if(token){...} else { res.status(401)}
-// "NOT AUTHENTICATED OR FORBIDDEN"..403 // if ( token.userId === userId) {...} else {res.status(403).send({}) }
-// -- try catch ....// "SERVER ERROR"...500
-
-// -- ALL GOOD... //status(200)- OK
-// --- "ALL GOOD and A NEW RESOURCE WAS SUCCEFULLY CREATED" ...status(201)..e.g a new user registers herself successfully
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const getBooksData = async function (req, res) {
-    let allBooks = await BookModel.find({ authorName: "HO" })
+      try{
+        let allBooks = await BookModel.find({ authorName: "jsaiDeepak" })
     console.log(allBooks)
-    if (allBooks.length > 0) res.send({ msg: allBooks, condition: true })
-    else res.send({ msg: "No books found", condition: false })
+    if (allBooks.length > 0) 
+    {res.status(201).send({ msg: allBooks, condition: true })
+}
+    else res.status(400).send({ msg: "No authorName found", condition: false })
+}
+catch (err){
+    console.log("this is error :", err.message)
+    res.status(500).send({msg: "error", error: err.message})
+}
 }
 
 
 const updateBooks = async function (req, res) {
-    let data = req.body // {sales: "1200"}
-    // let allBooks= await BookModel.updateMany( 
-    //     { author: "SK"} , //condition
-    //     { $set: data } //update in data
-    //  )
+    try{
+        
+    let data = req.body 
     let allBooks = await BookModel.findOneAndUpdate(
-        { authorName: "ABC" }, //condition
-        { $set: data }, //update in data
-        { new: true, upsert: true } ,// new: true - will give you back the updated document // Upsert: it finds and updates the document but if the doc is not found(i.e it does not exist) then it creates a new document i.e UPdate Or inSERT
+        { authorName: "jsaiDeepak" }, 
+        { $set: data }, 
+        { new: true, upsert: true } ,
     )
 
-    res.send({ msg: allBooks })
+    res.status(201).send({ msg: allBooks })
+
 }
 
+catch(err){
+    console.log("this is error :", err.message)
+    res.status(500).send({msg: "error", error: err.message})
+
+}
+}
+
+
 const deleteBooks = async function (req, res) {
-    // let data = req.body 
+    try{
+      
+ 
     let allBooks = await BookModel.updateMany(
-        { authorName: "FI" }, //condition
-        { $set: { isDeleted: true } }, //update in data
+        { authorName: "jsaiDeepak" }, 
+        { $set: { isDeleted: true } }, 
         { new: true } ,
     )
 
-    res.send({ msg: allBooks })
+    res.status(201).send({ msg: allBooks })
+
+
+}
+catch(err){
+    console.log("this is error :", err.message)
+    res.status(500).send({msg: "error", error: err.message})
+
+}
 }
 
 
 
 const totalSalesPerAuthor = async function (req, res) {
-    // let data = req.body 
+ try{
+     let allBooks=req.body
+     if(allBooks.authorName){
     let allAuthorSales = await BookModel.aggregate(
         [
             { $group: { _id: "$authorName", totalNumberOfSales: { $sum: "$sales" } } },
@@ -104,17 +92,18 @@ const totalSalesPerAuthor = async function (req, res) {
         ]
     )
 
-    res.send({ msg: allAuthorSales })
+    res.status(201).send({ msg: allAuthorSales })
 }
+else
+    res.status(400).send({ msg: "BAD REQUEST"})
 
+}
+catch(err){
+    console.log("this is error :", err.message)
+    res.status(500).send({msg: "error", error: err.message})
 
-
-
-// CRUD OPERATIONS:
-// CREATE
-// READ
-// UPDATE
-// DELETE
+}
+}
 
 
 

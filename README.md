@@ -23,3 +23,44 @@
 // -- ALL GOOD... //status(200)- OK
 // --- "ALL GOOD and A NEW RESOURCE WAS SUCCEFULLY CREATED" ...status(201)..e.g a new user registers herself successfully
 
+
+
+
+//book
+
+{
+    firstName: String,
+    lastName: String,
+    mobile: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    emailId: String,
+    gender: {
+        type: String,
+        enum: ["male", "female", "LGBTQ"] 
+    },
+    age: Number,
+ 
+}
+
+
+//users
+{
+    bookName: {type: String, required: true}, 
+    authorName: String, 
+    tags: [String],
+    
+    isPublished: Boolean,
+    prices: {
+        indianPrice: String,
+        europePrice: String,
+    },
+    sales: {type: Number, default: 10},
+    
+
+    summary :  mongoose.Schema.Types.Mixed,
+    isDeleted: Boolean //true on book deletion i.e you flag the document/data as isDeleted: true..(mark "dirty")
+
+}
