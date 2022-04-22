@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
+//1.
 const createUser = async function (abcd, xyz) {
   //You can name the req, res objects anything.
   //but the first parameter is always the request 
@@ -11,6 +12,7 @@ const createUser = async function (abcd, xyz) {
   xyz.send({ msg: savedData });
 };
 
+//2...
 const loginUser = async function (req, res) {
   let userName = req.body.emailId;
   let password = req.body.password;
@@ -40,6 +42,7 @@ const loginUser = async function (req, res) {
   res.send({ status: true, data: token });
 };
 
+//3...
 const getUserData = async function (req, res) {
 
   let userId = req.params.userId;
@@ -50,6 +53,7 @@ const getUserData = async function (req, res) {
   res.send({ status: true, data: userDetails });
 };
 
+//4...
 const updateUser = async function (req, res) {
   let userId = req.params.userId;
   let user = await userModel.findById(userId);
@@ -63,6 +67,7 @@ const updateUser = async function (req, res) {
   res.send({ status: updatedUser, data: updatedUser });
 };
 
+//5...
 const deleteUser = async function(req, res) {    
   let userId = req.params.userId
   let user = await userModel.findById(userId)
