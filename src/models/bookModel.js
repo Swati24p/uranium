@@ -14,9 +14,9 @@ const bookSchema = new mongoose.Schema( {
     
 
     summary :  mongoose.Schema.Types.Mixed,
-    isDeleted: Boolean //true on book deletion i.e you flag the document/data as isDeleted: true..(mark "dirty")
+    isDeleted:{type: Boolean, default: false} //true on book deletion i.e you flag the document/data as isDeleted: true..(mark "dirty")
 
 }, { timestamps: true });
 
 
-module.exports = mongoose.model('ass13BooK', bookSchema) //users
+module.exports = mongoose.model('trycatchBooK', bookSchema) //users
